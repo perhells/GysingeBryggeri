@@ -1,0 +1,38 @@
+{% extends 'maltlager/base.html' %}
+{% block block_title %}Hops{% endblock %}
+{% block content %}
+    <div class="jumbotron container">
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                <li><a href="/">Malt</a></li>
+                <li class="active"><a href="">Hops</a></li>
+            </ul>
+            <div class="tab-content">
+                {% if hops_list %}
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-md-6">Name</th>
+                            <th class="col-md-2">Amount</th>
+                            <th class="col-md-2">Update</th>
+                            <th class="col-md-2">History</th>
+                        </tr>
+                    </thead>
+                    {% for hops in hops_list %}
+                        <tr>
+                            <td style="vertical-align:middle">{{ hops.name }}</td>
+                            <td style="vertical-align:middle">{{ hops.amount }} kg</td>
+                            <td style="vertical-align:middle"><a class="btn btn-primary" href="/hops/{{ hops.name }}/">Update</a></td>
+                            <td style="vertical-align:middle"><a class="btn btn-primary" href="/hops_history/{{ hops.name }}/">History</a></td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                {% else %}
+                    <p>No hops are available!</p>
+                {% endif %}
+            </div>
+            <a style="float:left; margin-bottom:15px" class="btn btn-primary" href="/history/hops/">History</a>
+            <a style="float:right; margin-bottom:15px" class="btn btn-primary" href="/hops_form/">New hops</a>
+        </div>
+    </div>
+{% endblock %}
