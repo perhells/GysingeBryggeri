@@ -92,7 +92,7 @@ def malt_form(request):
                 form_name = data.get('name')
                 form_amount = data.get('amount')
                 form_time = timezone.now()
-                t = MaltChange(name=form_name,amount=form_amount,time=form_time)
+                t = MaltChange(name=form_name,amount=form_amount,time=form_time,user=request.user.username)
                 t.save()
                 m = Malt(name=form_name,amount=form_amount)
                 m.save()
@@ -115,7 +115,7 @@ def hops_form(request):
                 form_name = data.get('name')
                 form_amount = data.get('amount')
                 form_time = timezone.now()
-                t = HopsChange(name=form_name,amount=form_amount,time=form_time)
+                t = HopsChange(name=form_name,amount=form_amount,time=form_time,user=request.user.username)
                 t.save()
                 h = Hops(name=form_name,amount=form_amount)
                 h.save()
@@ -137,7 +137,7 @@ def update_malt_form(request, current_malt):
                 data = form.cleaned_data
                 form_change = data.get('amount')
                 form_time = timezone.now()
-                t = MaltChange(name=current_malt,amount=form_change,time=form_time)
+                t = MaltChange(name=current_malt,amount=form_change,time=form_time,user=request.user.username)
                 t.save()
                 m = Malt.objects.get(name=current_malt)
                 m.amount = m.amount + form_change
@@ -161,7 +161,7 @@ def update_hops_form(request, current_hops):
                 data = form.cleaned_data
                 form_change = data.get('amount')
                 form_time = timezone.now(utc)
-                t = HopsChange(name=current_hops,amount=form_change,time=form_time)
+                t = HopsChange(name=current_hops,amount=form_change,time=form_time,user=request.user.username)
                 t.save()
                 h = Hops.objects.get(name=current_hops)
                 h.amount = h.amount + form_change

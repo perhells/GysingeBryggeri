@@ -14,12 +14,14 @@
                         <tr>
                             <th>Amount</th>
                             <th>Time</th>
+                            <th>User</th>
                         </tr>
                     </thead>
                     {% for hops_change in hops_change_list %}
                         <tr>
                             <td style="vertical-align:middle" class="col-md-6">{{ hops_change.amount }} kg</td>
-                            <td style="vertical-align:middle" class="col-md-6">{{ hops_change.time }}</td>
+                            <td style="vertical-align:middle" class="col-md-3">{{ hops_change.time }}</td>
+                            <td style="vertical-align:middle" class="col-md-3">{{ hops_change.user }}</td>
                         </tr>
                     {% endfor %}
                     </table>
