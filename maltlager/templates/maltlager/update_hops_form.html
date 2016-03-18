@@ -1,0 +1,15 @@
+{% extends 'maltlager/base.html' %}
+{% block block_title %}Updating {{ current_hops }} hops{% endblock %}
+{% block content %}
+    <div class="jumbotron container">
+        <form action="" method="post">
+            <p>Current amount: {{ amount }} kg</p>
+            {% csrf_token %}
+            {{ form }}
+            <br>
+            <br>
+            <a style="float:left" class="btn btn-danger" href="/hops/">Back</a>
+            <input type="submit" style="float:right" class="btn btn-primary" value="Submit" />
+        </form>
+    </div>
+{% endblock %}

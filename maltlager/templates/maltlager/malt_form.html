@@ -1,0 +1,14 @@
+{% extends 'maltlager/base.html' %}
+{% block block_title %}Adding malt{% endblock %}
+{% block content %}
+    <div class="jumbotron container">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <br>
+            <br>
+            <a style="float:left" class="btn btn-danger" href="/">Back</a>
+            <input type="submit" style="float:right" class="btn btn-primary" value="Submit" />
+        </form>
+    </div>
+{% endblock %}

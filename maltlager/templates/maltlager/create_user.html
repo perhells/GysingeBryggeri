@@ -1,0 +1,19 @@
+{% extends 'maltlager/base.html' %}
+{% block block_title %}Create User{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">        
+            <form action="" method="post" class="form-vertical">
+                <div style="max-width: 137px; width: 137px; margin: 0 auto;" >
+                    {% csrf_token %}
+                    {{ form }}
+                </div>
+                <div style="width: 100px; margin: 0 auto;" >
+                    <br>
+                    <input type="submit" style="width: 100px" class="btn btn-primary" value="Create User" />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

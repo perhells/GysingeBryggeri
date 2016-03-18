@@ -1,0 +1,38 @@
+{% extends 'maltlager/base.html' %}
+{% block block_title %}Users{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="tabbable">
+                <div class="tab-content">
+                    {% if user_list %}
+                        <table class="table table-hover" style="table-layout: fixed;word-wrap: break-word;">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-8">Username</th>
+                                    <th class="col-md-2">Staff</th>
+                                    <th class="col-md-2">Delete User</th>
+                                </tr>
+                            </thead>
+                            {% for user in user_list %}
+                                <tr>
+                                    <td style="vertical-align:middle">{{ user.username }}</td>
+                                    {% if user.is_staff %}
+                                        <td style="vertical-align:middle"><a class="btn btn-danger" href="/revoke_staff/{{ user.username }}/">Revoke</a></td>
+                                    {% else %}
+                                        <td style="vertical-align:middle"><a class="btn btn-success" href="/grant_staff/{{ user.username }}/">Grant</a></td>
+                                    {% endif%}
+                                    <td style="vertical-align:middle"><a class="btn btn-danger" href="/delete_user/{{ user.username }}/">Delete</a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <p>No malts are available!</p>
+                    {% endif %}
+                </div>
+                <a style="float:left; margin-bottom:15px" class="btn btn-primary" href="/">Back</a>
+                <a style="float:right; margin-bottom:15px" class="btn btn-primary" href="/create_user/">Create User</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
