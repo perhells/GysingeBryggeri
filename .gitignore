@@ -1,3 +1,4 @@
 gysinge/__pycache__/
 maltlager/__pycache__/
 maltlager/migrations/
+maltlager/migrations/*
