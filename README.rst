@@ -6,11 +6,13 @@ Maltlager
 
     A system to handle the warehouse of malt and hops for Gysinge Brewery.
 
-
 Administration
 ------------
 
-    Currently users have to be added manually in the django shell. Working on an administration panel.
+    Users can be added in the settings page (available for staff).
+
+    They can also be created in the django shell manually if needed.
+
 Authors
 -------
     - Per Hellström
