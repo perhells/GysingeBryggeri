@@ -2,7 +2,6 @@ from django.conf.urls import url
 
 from . import views
 
-
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^access_denied/$', views.access_denied, name='access_denied'),
