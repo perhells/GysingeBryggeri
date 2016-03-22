@@ -39,10 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'django_extensions',
-=======
->>>>>>> a2ad41dd011fa5ed7e2e46536eeb23f1330bc54c
     'maltlager',
 )
 
@@ -83,7 +80,6 @@ WSGI_APPLICATION = 'gysinge.wsgi.application'
 
 DATABASES = {
     'default': {
-<<<<<<< HEAD
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'maltlager',
         'USER': 'gysinge_maltlager',
@@ -91,10 +87,6 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
 	'TIME_ZONE': None,
-=======
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
->>>>>>> a2ad41dd011fa5ed7e2e46536eeb23f1330bc54c
     }
 }
 
@@ -104,11 +96,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-<<<<<<< HEAD
 TIME_ZONE = 'Europe/Stockholm'
-=======
-TIME_ZONE = 'UTC'
->>>>>>> a2ad41dd011fa5ed7e2e46536eeb23f1330bc54c
 
 USE_I18N = True
 
