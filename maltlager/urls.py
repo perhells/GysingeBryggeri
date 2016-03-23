@@ -4,6 +4,11 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^activities/$', views.activities, name='activities'),
+    url(r'^members/$', views.members, name='members'),
+    url(r'^contact/$', views.contact, name='contact'),
+    url(r'^calendar/$', views.calendar, name='calendar'),
+    url(r'^malts/$', views.list_malts, name='list_malts'),
     url(r'^access_denied/$', views.access_denied, name='access_denied'),
     url(r'^login/$', views.login_view, name='login_view'),
     url(r'^logout/$', views.logout_view, name='logout_view'),

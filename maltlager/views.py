@@ -12,25 +12,40 @@ import django.db
 import os
 
 def bad_request(request):
+    context = {'active_page': 'bad_request'}
     return render(request, 'maltlager/400.html', {})
 
 def page_not_found(request):
+    context = {'active_page': 'page_not_found'}
     return render(request, 'maltlager/404.html', {})
 
 def server_error(request):
+    context = {'active_page': 'server_error'}
     return render(request, 'maltlager/500.html', {})
 
-def index(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
-    else:
-        malt_list = malt.objects.all().order_by('name')
-        context = {'malt_list': malt_list}
-        return render(request, 'maltlager/index.html', context)
-
 def access_denied(request):
-    context = {}
+    context = {'active_page': 'access_denied'}
     return render(request, 'maltlager/access_denied.html', context)
+
+def index(request):
+    context = {'active_page': 'home'}
+    return render(request, 'maltlager/index.html', context)
+
+def activities(request):
+    context = {'active_page': 'activities'}
+    return render(request, 'maltlager/activities.html', context)
+
+def members(request):
+    context = {'active_page': 'members'}
+    return render(request, 'maltlager/members.html', context)
+
+def contact(request):
+    context = {'active_page': 'contact'}
+    return render(request, 'maltlager/contact.html', context)
+
+def calendar(request):
+    context = {'active_page': 'calendar'}
+    return render(request, 'maltlager/calendar.html', context)
 
 def login_view(request):
     if request.method == 'POST':
@@ -40,7 +55,6 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                #return index(request)
                 return HttpResponseRedirect('/')
             else:
                 return HttpResponseRedirect('/inactive_user/')
@@ -48,7 +62,7 @@ def login_view(request):
             return HttpResponseRedirect('/invalid_user/')
     else:
         form = AuthenticationForm(request)
-        context = {'form': form}
+        context = {'form': form, 'active_page': 'login'}
         return render(request, 'maltlager/login.html', context)
 
 
@@ -76,7 +90,7 @@ def create_user(request):
                 return HttpResponseRedirect('/invalid_form/')
         else:
             form = CreateUserForm()
-            context = {'form': form}
+            context = {'form': form, 'active_page': 'create_user'}
             return render(request, 'maltlager/create_user.html', context)
     else:
         return HttpResponseRedirect('/access_denied/')
@@ -119,21 +133,29 @@ def revoke_staff(request, username):
 def settings(request):
     if request.user.is_staff:
         users = User.objects.all().order_by('username')
-        context = {'user_list': users}
+        context = {'user_list': users, 'active_page': 'settings'}
         return render(request, 'maltlager/settings.html', context)
     else:
         return HttpResponseRedirect('/access_denied/')
             
 def user_exists(request):
-    context = {}
+    context = {'active_page': 'settings'}
     return render(request, 'maltlager/user_exists.html', context)
+
+def list_malts(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
+    else:
+        malt_list = malt.objects.all().order_by('name')
+        context = {'malt_list': malt_list, 'active_page': 'maltlager'}
+        return render(request, 'maltlager/malts.html', context)
 
 def list_hops(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/')
     else:
         hops_list = hops.objects.all().order_by('name')
-        context = {'hops_list': hops_list}
+        context = {'hops_list': hops_list, 'active_page': 'maltlager'}
         return render(request, 'maltlager/hops.html', context)
 
 def history_malt(request):
@@ -141,7 +163,7 @@ def history_malt(request):
         return HttpResponseRedirect('/login/')
     else:
         malt_change_list = maltchange.objects.all().order_by('-time')
-        context = {'malt_change_list': malt_change_list}
+        context = {'malt_change_list': malt_change_list, 'active_page': 'maltlager'}
         return render(request, 'maltlager/history_malt.html', context)
 
 def history_hops(request):
@@ -149,7 +171,7 @@ def history_hops(request):
         return HttpResponseRedirect('/login/')
     else:
         hops_change_list = hopschange.objects.all().order_by('-time')
-        context = {'hops_change_list': hops_change_list}
+        context = {'hops_change_list': hops_change_list, 'active_page': 'maltlager'}
         return render(request, 'maltlager/history_hops.html', context)
 
 def malt_history(request,current_malt):
@@ -157,7 +179,7 @@ def malt_history(request,current_malt):
         return HttpResponseRedirect('/login/')
     else:
         malt_change_list = maltchange.objects.all().filter(name=current_malt).order_by('-time')
-        context = {'malt_change_list': malt_change_list, 'current_malt': current_malt}
+        context = {'malt_change_list': malt_change_list, 'current_malt': current_malt, 'active_page': 'maltlager'}
         return render(request, 'maltlager/malt_history.html', context)
 
 def hops_history(request,current_hops):
@@ -165,7 +187,7 @@ def hops_history(request,current_hops):
         return HttpResponseRedirect('/login/')
     else:
         hops_change_list = hopschange.objects.all().filter(name=current_hops).order_by('-time')
-        context = {'hops_change_list': hops_change_list, 'current_hops': current_hops}
+        context = {'hops_change_list': hops_change_list, 'current_hops': current_hops, 'active_page': 'maltlager'}
         return render(request, 'maltlager/hops_history.html', context)
 
 def malt_form(request):
@@ -184,11 +206,11 @@ def malt_form(request):
                 m = malt(name=form_name,amount=form_amount)
                 m.save()
                 malt_list = malt.objects.all()
-                context = {'malt_list': malt_list}
-                return render(request, 'maltlager/index.html',context)
+                context = {'malt_list': malt_list, 'active_page': 'maltlager'}
+                return render(request, 'maltlager/malts.html',context)
         else:
             form = MaltForm()
-            context = {'form': form}
+            context = {'form': form, 'active_page': 'maltlager'}
         return render(request, 'maltlager/malt_form.html', context)
 
 def hops_form(request):
@@ -207,12 +229,12 @@ def hops_form(request):
                 h = hops(name=form_name,amount=form_amount)
                 h.save()
                 hops_list = hops.objects.all()
-                context = {'hops_list': hops_list}
+                context = {'hops_list': hops_list, 'active_page': 'maltlager'}
                 return render(request, 'maltlager/hops.html',context)
         else:
             form = HopsForm()
-        
-        return render(request, 'maltlager/hops_form.html', {'form': form})
+        context = {'form': form, 'active_page': 'maltlager'}
+        return render(request, 'maltlager/hops_form.html', context)
 
 def update_malt_form(request, current_malt):
     if not request.user.is_authenticated():
@@ -230,12 +252,12 @@ def update_malt_form(request, current_malt):
                 m.amount = m.amount + form_change
                 m.save()
                 malt_list = malt.objects.all()
-                context = {'malt_list': malt_list}
-                return render(request, 'maltlager/index.html',context)
+                context = {'malt_list': malt_list, 'active_page': 'maltlager'}
+                return render(request, 'maltlager/malts.html',context)
         else:
             form = UpdateMaltForm()
         amount = malt.objects.get(name=current_malt).amount
-        context = {'form': form, 'current_malt': current_malt, 'amount': amount}
+        context = {'form': form, 'current_malt': current_malt, 'amount': amount, 'active_page': 'maltlager'}
         return render(request, 'maltlager/update_malt_form.html', context)
 
 def update_hops_form(request, current_hops):
@@ -254,10 +276,10 @@ def update_hops_form(request, current_hops):
                 h.amount = h.amount + form_change
                 h.save()
                 hops_list = hops.objects.all()
-                context = {'hops_list': hops_list}
+                context = {'hops_list': hops_list, 'active_page': 'maltlager'}
                 return render(request, 'maltlager/hops.html',context)
         else:
             form = UpdateHopsForm()
         amount = hops.objects.get(name=current_hops).amount
-        context = {'form': form, 'current_hops': current_hops, 'amount': amount}
+        context = {'form': form, 'current_hops': current_hops, 'amount': amount, 'active_page': 'maltlager'}
         return render(request, 'maltlager/update_hops_form.html', context)

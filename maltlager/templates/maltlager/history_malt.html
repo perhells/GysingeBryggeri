@@ -1,11 +1,11 @@
 {% extends 'maltlager/base.html' %}
-{% block block_title %}Malt history{% endblock %}
+{% block block_title %}Malt History{% endblock %}
 {% block content %}
     <div class="jumbotron">
         <div class="container">
             <div class="tabbable">
                 <ul class="nav nav-tabs">
-                <li class="active"><a href="/">Malt</a></li>
+                <li class="active"><a href="/malts/">Malt</a></li>
                 <li><a href="/hops/">Hops</a></li>
                 </ul>
                 <div class="tab-content">
@@ -23,15 +23,15 @@
                     <tr>
                         <td style="vertical-align:middle" class="col-md-3">{{ malt_change.name }}</td>
                         <td style="vertical-align:middle" class="col-md-3">{{ malt_change.amount }} kg</td>
-                        <td style="vertical-align:middle" class="col-md-3">{{ malt_change.time }}</td>
+                        <td style="vertical-align:middle" class="col-md-3">{{ malt_change.time|date:'Y-m-d H:i' }}</td>
                         <td style="vertical-align:middle" class="col-md-3">{{ malt_change.user }}</td>
                     </tr>
                     {% endfor %}
                     </table>
                 {% else %}
-                    <p>No changes in history!</p>
+                    <p>No history available for malt!</p>
                 {% endif %}
-                <a style="float:left; margin-bottom:15px" class="btn btn-primary" href="/">Back</a>
+                <a style="float:left; margin-bottom:15px" class="btn btn-primary" href="/malts/">Back</a>
                 </div>
             </div>
         </div>

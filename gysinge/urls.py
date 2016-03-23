@@ -26,5 +26,4 @@ handler500 = 'maltlager.views.server_error'
 
 urlpatterns = [
     url(r'^', include('maltlager.urls')),
-    url(r'^admin/', include(admin.site.urls)),
 ]

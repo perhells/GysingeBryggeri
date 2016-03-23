@@ -8,46 +8,79 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>Maltlager</title>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="/static/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/css/bootstrap.css">
+
     </head>
     <body>
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                        <a href="http://gysingebryggeri.se/">
-                            <img src="/static/resources/images/logga.png" style="height: 50px; width:auto;">
-                        </a>
-                    </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="http://gysingebryggeri.se/">Home</a></li>
-                            <li class="active"><a href="/">Maltlager <span class="sr-only">(current)</span></a></li>
-                        </ul>
-                        {% if request.user.is_authenticated %} 
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="/logout/">Logout({{request.user.username}})</a></li>
-                            </ul>
-                        {% endif %}
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a href="/">
+                        <img src="/static/resources/images/logga.png" style="height: 50px; width:auto;">
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        {% if active_page = "home" %}
+                            <li class="active"><a href="/">Hem<span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="/">Hem</a></li>
+                        {% endif%}
+                        {% if active_page = "activities" %}
+                            <li class="active"><a href="/activities/">Aktiviteter<span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="/activities/">Aktiviteter</a></li>
+                        {% endif%}
+                        {% if active_page = "members" %}
+                            <li class="active"><a href="/members/">Medlemmar<span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="/members/">Medlemmar</a></li>
+                        {% endif%}
+                        {% if active_page = "contact" %}
+                            <li class="active"><a href="/contact/">Kontakta oss<span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="/contact/">Kontakta oss</a></li>
+                        {% endif%}
+                        {% if active_page = "calendar" %}
+                            <li class="active"><a href="/calendar/">Kalender<span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="/calendar/">Kalender</a></li>
+                        {% endif%}
+                        {% if active_page = "maltlager" %}
+                            <li class="active"><a href="/malts/">Maltlager<span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="/malts/">Maltlager</a></li>
+                        {% endif%}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                    {% if request.user.is_authenticated %} 
                         {% if request.user.is_staff %} 
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="/settings/">Settings</a></li>
-                            </ul>
+                            {% if active_page = "settings" %}
+                                <li class="active"><a href="/settings/">Inställningar</a></li>
+                            {% else %}
+                                <li><a href="/settings/">Inställningar</a></li>
+                            {% endif%}
                         {% endif %}
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
+                        <li><a href="/logout/">Logga ut({{request.user.username}})</a></li>
+                    {% else %}
+                        {% if active_page = "login" %}
+                            <li class="active"><a href="/login/">Logga in</a></li>
+                        {% else %}
+                            <li><a href="/login/">Logga in</a></li>
+                        {% endif%}
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
             <div class="page-header">
                 <h1 style="text-align:center">{% block block_title %}Maltlager{% endblock %}</h1>
             </div>

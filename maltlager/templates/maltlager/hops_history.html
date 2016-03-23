@@ -5,7 +5,7 @@
         <div class="container">
             <div class="tabbable">
                 <ul class="nav nav-tabs">
-                    <li><a href="/">Malt</a></li>
+                    <li><a href="/malts/">Malt</a></li>
                     <li class="active"><a href="/hops/">Hops</a></li>
                 </ul>
                 <div class="tab-content">
@@ -21,7 +21,7 @@
                         {% for hops_change in hops_change_list %}
                             <tr>
                                 <td style="vertical-align:middle" class="col-md-6">{{ hops_change.amount }} kg</td>
-                                <td style="vertical-align:middle" class="col-md-3">{{ hops_change.time }}</td>
+                                <td style="vertical-align:middle" class="col-md-3">{{ hops_change.time|date:'Y-m-d H:i' }}</td>
                                 <td style="vertical-align:middle" class="col-md-3">{{ hops_change.user }}</td>
                             </tr>
                         {% endfor %}
