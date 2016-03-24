@@ -1,9 +1,61 @@
 {% extends 'maltlager/base.html' %}
-{% block block_title %}Gysinge Bryggerisällskap{% endblock %}
+{% block block_title %}{% endblock %}
 {% block content %}
-    <div class="jumbotron">
-        <div class="container">
-            <p style="text-align: center">Välkommen!</p>
+    <div class="container">
+        <img class="banner-image" src="/static/resources/images/home-banner.png" alt="Banner image">
+    </div>
+    <div class="container">
+        <h1 style="text-align: center">Välkomna till Gysinge Bryggerisällskap!</h1>
+    </div>
+    <div class="container">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-2">
+            <a href="/activities/" class="thumbnail">
+                <div class="thumbnail-image">
+                    <img src="/static/resources/images/activities.jpg" style="width: 100%; height:auto; max-height:100%;">
+                </div>
+                <h4 style="text-align: center;">Aktiviteter</h4>
+                <p style="text-align: center;">Saker som händer i bryggeriet</p>
+            </a>
+        </div>
+        <div class="col-lg-2">
+            <a href="/about/" class="thumbnail">
+                <div class="thumbnail-image">
+                    <img src="/static/resources/images/about.jpg" style="width: 100%; height:auto; max-height:100%;">
+                </div>
+                <h4 style="text-align: center;">Om oss</h4>
+                <p style="text-align: center;">Information om hur vi brygger öl i Gysinge</p>
+            </a>
+        </div>
+        <div class="col-lg-2">
+            <a href="/about/" class="thumbnail">
+                <div class="thumbnail-image">
+                    <img src="/static/resources/images/courses.jpg" style="width: 100%; height:auto; max-height:100%;">
+                </div>
+                <h4 style="text-align: center;">Kurser</h4>
+                <p style="text-align: center;">Våra kurser inom ölbryggning</p>
+            </a>
+        </div>
+        <div class="col-lg-2">
+            <a href="/calendar/" class="thumbnail">
+                <div class="thumbnail-image">
+                    <img src="/static/resources/images/calendar.jpg" style="width: 100%; height:auto; max-height:100%;">
+                </div>
+                <h4 style="text-align: center;">Kalender</h4>
+                <p style="text-align: center;">Bokningar av bryggeriet</p>
+            </a>
+        </div>
+        <div class="col-lg-2">
+            <a href="/members/" class="thumbnail">
+                <div class="thumbnail-image">
+                    <img src="/static/resources/images/member.png" style="width: 100%; height:auto; max-height:100%;">
+                </div>
+                <h4 style="text-align: center;">Bli medlem</h4>
+                <p style="text-align: center;">Information för dig som är intresserad av att brygga öl och bli medlem</p>
+            </a>
+        </div>
+        <div class="col-md-1">
         </div>
     </div>
 {% endblock %}

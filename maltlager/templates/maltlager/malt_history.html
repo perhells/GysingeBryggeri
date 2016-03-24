@@ -1,5 +1,9 @@
 {% extends 'maltlager/base.html' %}
-{% block block_title %}Malt history for {{ current_malt }} malt{% endblock %}
+{% block block_title %}
+    <div class="page-header">
+        <h1 style="text-align:center">History for {{ current_malt }} malt</h1>
+    </div>
+{% endblock %}
 {% block content %}
     <div class="jumbotron">
         <div class="container">

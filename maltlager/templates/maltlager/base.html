@@ -7,31 +7,37 @@
 	<link rel="shortcut icon" type="image/png" href="/static/resources/images/logga.png"
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>Maltlager</title>
-	<!-- Latest compiled and minified CSS -->
+	<!-- Latest compiled CSS -->
 	<link rel="stylesheet" href="/static/css/bootstrap.css">
 
     </head>
     <body>
-        <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <div class="container alert alert-info" style="text-align: center;" role="alert"><strong>Information:</strong> Den här sidan är under utveckling, och allt funkar inte som det är tänk än. Tack för överseendet!</div>
+        <div class="container">
+            <div class="navbar navbar-default">
+                <div class="navbar-header col-lg-3 col-md-12 col-sm-12">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a href="/">
-                        <img src="/static/resources/images/logga.png" style="height: 50px; width:auto;">
+                    <a href="/" style="width: 150px; display: block; margin: auto;">
+                        <img src="/static/resources/images/logga.png" alt="Gysinge Bryggerisällskap logga" style="width: 150px; height: 100px;">
                     </a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-right navbar-collapse col-lg-9" id="bs-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         {% if active_page = "home" %}
                             <li class="active"><a href="/">Hem<span class="sr-only">(current)</span></a></li>
                         {% else %}
                             <li><a href="/">Hem</a></li>
+                        {% endif%}
+                        {% if active_page = "about" %}
+                            <li class="active"><a href="/about/">Om oss<span class="sr-only">(current)</span></a></li>
+                        {% else %}
+                            <li><a href="/about/">Om oss</a></li>
                         {% endif%}
                         {% if active_page = "activities" %}
                             <li class="active"><a href="/activities/">Aktiviteter<span class="sr-only">(current)</span></a></li>
@@ -53,44 +59,54 @@
                         {% else %}
                             <li><a href="/calendar/">Kalender</a></li>
                         {% endif%}
-                        {% if active_page = "maltlager" %}
-                            <li class="active"><a href="/malts/">Maltlager<span class="sr-only">(current)</span></a></li>
-                        {% else %}
-                            <li><a href="/malts/">Maltlager</a></li>
-                        {% endif%}
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                    {% if request.user.is_authenticated %} 
-                        {% if request.user.is_staff %} 
-                            {% if active_page = "settings" %}
-                                <li class="active"><a href="/settings/">Inställningar</a></li>
+                        {% if request.user.is_authenticated %} 
+                            {% if active_page = "maltlager" %}
+                                <li class="active"><a href="/malts/">Maltlager<span class="sr-only">(current)</span></a></li>
                             {% else %}
-                                <li><a href="/settings/">Inställningar</a></li>
+                                <li><a href="/malts/">Maltlager</a></li>
+                            {% endif%}
+                            {% if request.user.is_staff %} 
+                                {% if active_page = "settings" %}
+                                    <li class="active"><a href="/settings/">Inställningar</a></li>
+                                {% else %}
+                                    <li><a href="/settings/">Inställningar</a></li>
+                                {% endif%}
+                            {% endif %}
+                            <li><a href="/logout/">Logga ut ({{request.user.username}})</a></li>
+                        {% else %}
+                            {% if active_page = "login" %}
+                                <li class="active"><a href="/login/">Logga in</a></li>
+                            {% else %}
+                                <li><a href="/login/">Logga in</a></li>
                             {% endif%}
                         {% endif %}
-                        <li><a href="/logout/">Logga ut({{request.user.username}})</a></li>
-                    {% else %}
-                        {% if active_page = "login" %}
-                            <li class="active"><a href="/login/">Logga in</a></li>
-                        {% else %}
-                            <li><a href="/login/">Logga in</a></li>
-                        {% endif%}
-                    {% endif %}
                     </ul>
                 </div>
             </div>
         </div>
         <div class="container">
+            {% block block_title %}
             <div class="page-header">
-                <h1 style="text-align:center">{% block block_title %}Maltlager{% endblock %}</h1>
+                <h1 style="text-align:center">Maltlager</h1>
             </div>
+            {% endblock %}
             {% block content %}
                 
             {% endblock %}
         </div>
-        <div id="footer">
-            <div class="container">
-                <p style="text-align: center">Gysinge Bryggerisällskap</p>
+        <div class="container footer">
+            <div class="footer-padding">
+                <div class="visible-lg col-md-3">
+                    <a href="https://www.facebook.com/Gysinge-Bryggeris%C3%A4llskap-Norrlands-sydligaste-bryggeri-614297191957410/">
+                        <img class="img-circle" style="height: 50px; width: 50px;" src="/static/resources/images/facebook.png">
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 footer-text">
+                    <h4 style="text-align: center;">Gysinge Bryggerisällskap</h4>
+                </div>
+                <div class="visible-lg col-md-3 footer-text">
+                    <h4 style="text-align: right;"> info@gysingebryggeri.se</h4>
+                </div>
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

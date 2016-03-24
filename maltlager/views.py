@@ -31,6 +31,10 @@ def index(request):
     context = {'active_page': 'home'}
     return render(request, 'maltlager/index.html', context)
 
+def about(request):
+    context = {'active_page': 'about'}
+    return render(request, 'maltlager/about.html', context)
+
 def activities(request):
     context = {'active_page': 'activities'}
     return render(request, 'maltlager/activities.html', context)
@@ -144,7 +148,7 @@ def user_exists(request):
 
 def list_malts(request):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         malt_list = malt.objects.all().order_by('name')
         context = {'malt_list': malt_list, 'active_page': 'maltlager'}
@@ -152,7 +156,7 @@ def list_malts(request):
 
 def list_hops(request):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         hops_list = hops.objects.all().order_by('name')
         context = {'hops_list': hops_list, 'active_page': 'maltlager'}
@@ -160,7 +164,7 @@ def list_hops(request):
 
 def history_malt(request):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         malt_change_list = maltchange.objects.all().order_by('-time')
         context = {'malt_change_list': malt_change_list, 'active_page': 'maltlager'}
@@ -168,7 +172,7 @@ def history_malt(request):
 
 def history_hops(request):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         hops_change_list = hopschange.objects.all().order_by('-time')
         context = {'hops_change_list': hops_change_list, 'active_page': 'maltlager'}
@@ -176,7 +180,7 @@ def history_hops(request):
 
 def malt_history(request,current_malt):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         malt_change_list = maltchange.objects.all().filter(name=current_malt).order_by('-time')
         context = {'malt_change_list': malt_change_list, 'current_malt': current_malt, 'active_page': 'maltlager'}
@@ -184,7 +188,7 @@ def malt_history(request,current_malt):
 
 def hops_history(request,current_hops):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         hops_change_list = hopschange.objects.all().filter(name=current_hops).order_by('-time')
         context = {'hops_change_list': hops_change_list, 'current_hops': current_hops, 'active_page': 'maltlager'}
@@ -192,7 +196,7 @@ def hops_history(request,current_hops):
 
 def malt_form(request):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         if request.method == 'POST':
             form = MaltForm(request.POST)
@@ -215,7 +219,7 @@ def malt_form(request):
 
 def hops_form(request):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         if request.method == 'POST':
             form = HopsForm(request.POST)
@@ -238,7 +242,7 @@ def hops_form(request):
 
 def update_malt_form(request, current_malt):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         if request.method == 'POST':
             form = UpdateMaltForm(request.POST)
@@ -262,14 +266,14 @@ def update_malt_form(request, current_malt):
 
 def update_hops_form(request, current_hops):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/access_denied/')
     else:
         if request.method == 'POST':
             form = UpdateHopsForm(request.POST)
             if form.is_valid():
                 data = form.cleaned_data
                 form_change = data.get('amount')
-                form_time = timezone.now(utc)
+                form_time = timezone.now()
                 t = hopschange(name=current_hops,amount=form_change,time=form_time,user=request.user.username)
                 t.save()
                 h = hops.objects.get(name=current_hops)
