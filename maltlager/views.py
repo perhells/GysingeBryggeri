@@ -36,7 +36,8 @@ def about(request):
     return render(request, 'maltlager/about.html', context)
 
 def activities(request):
-    context = {'active_page': 'activities'}
+    test_activity = {'title': "Test activity", 'content': '<p>This is a test activity</p><br><ul><li>List item 1</li><li>List item 2</li></ul>'}
+    context = {'active_page': 'activities', 'activities': [test_activity,test_activity,test_activity]}
     return render(request, 'maltlager/activities.html', context)
 
 def members(request):

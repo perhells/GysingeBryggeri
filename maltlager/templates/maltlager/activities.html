@@ -9,4 +9,14 @@
             <p style="text-align: center">Här kommer vi att lägga upp information om de aktiviteter som är på gång i bryggeriet.</p>
         </div>
     </div>
+    {% if activities %}
+        {% for activity in activities %}
+            <div class="jumbotron">
+                <div class="article">
+                    <h2>{{ activity.title }}</h2>
+                    {{ activity.content|safe }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
