@@ -13,7 +13,9 @@
         {% for activity in activities %}
             <div class="jumbotron">
                 <div class="article">
-                    <h2>{{ activity.title }}</h2>
+                    <div class="page-header">
+                        <h2>{{ activity.title }}</h2>
+                    </div>
                     {{ activity.content|safe }}
                 </div>
             </div>
