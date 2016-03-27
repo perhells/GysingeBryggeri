@@ -23,3 +23,8 @@ class BoardMemberForm(forms.Form):
     role = forms.CharField(max_length=200)
     description = forms.CharField(max_length=200)
     image = forms.ImageField()
+
+class ActivityForm(forms.Form):
+    title = forms.CharField(max_length=200)
+    date = forms.DateTimeField()
+    content = forms.CharField(widget=forms.Textarea)

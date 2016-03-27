@@ -4,21 +4,37 @@
     <div class="container">
         <img class="banner-image" src="/static/resources/images/hops-banner.png" alt="Banner image">
     </div>
+    <h1 class="centered">Aktiviteter</h1>
     <div class="jumbotron">
         <div class="container">
-            <p style="text-align: center">Här kommer vi att lägga upp information om de aktiviteter som är på gång i bryggeriet.</p>
+            {% if activity_list %}
+                {% for activity in activity_list %}
+                    <div class="jumbotron">
+                        <div class="article">
+                            <div class="page-header">
+                                <h2>{{ activity.title }}</h2>
+                            </div>
+                            <div class="row">
+                                <p>{{ activity.date|date:'Y-m-d H:i' }}</p>
+                            </div>
+                            <div class="row">
+                                {{ activity.content|safe }}
+                            </div>
+                            {% if request.user.is_staff %}
+                                <div class="row">
+                                    <a class="btn btn-primary" style="display: block; width: 120px; float: left;" href="/edit_activity/{{ activity.id }}/">Edit</a>
+                                    <a class="btn btn-danger" style="display: block; width: 120px; float: right;" href="/delete_activity/{{ activity.id }}/">Delete</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                        <p style="text-align: center">Här kommer vi att lägga upp information om de aktiviteter som är på gång i bryggeriet.</p>
+            {% endif %}
+            {% if request.user.is_staff %}
+                <a class="btn btn-primary" style="display: block; width: 120px; margin: auto;" href="/edit_activity/new/">Add Activity</a>
+            {% endif %}
         </div>
     </div>
-    {% if activities %}
-        {% for activity in activities %}
-            <div class="jumbotron">
-                <div class="article">
-                    <div class="page-header">
-                        <h2>{{ activity.title }}</h2>
-                    </div>
-                    {{ activity.content|safe }}
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
 {% endblock %}

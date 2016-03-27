@@ -25,3 +25,8 @@ class board_member(models.Model):
     role = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images/board_member')
+
+class activity(models.Model):
+    title = models.CharField(max_length=200)
+    date = models.DateTimeField()
+    content = models.TextField()

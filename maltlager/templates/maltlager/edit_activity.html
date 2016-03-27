@@ -1,0 +1,23 @@
+{% extends 'maltlager/base.html' %}
+{% block block_title %}
+    <div class="page-header">
+        <h1 style="text-align:center">Editing activity</h1>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="jumbotron">        
+        <div class="container">        
+            <form action="" method="post" class="form-vertical" enctype="multipart/form-data">
+                <div style="max-width: 335px; margin: 0 auto;" >
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <div style="width: 220px; margin: 0 auto;" >
+                    <br>
+                    <a style="width: 100px; float: left;" class="btn btn-danger" href="/activities/">Back</a>
+                    <input type="submit" style="width: 100px; float: right;" class="btn btn-primary" value="Submit" />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

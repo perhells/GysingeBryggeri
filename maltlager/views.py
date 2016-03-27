@@ -5,8 +5,8 @@ from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, views
-from maltlager.models import malt, hops, maltchange, hopschange, board_member
-from maltlager.forms import MaltForm, UpdateMaltForm, HopsForm, UpdateHopsForm, CreateUserForm, BoardMemberForm
+from maltlager.models import malt, hops, maltchange, hopschange, board_member, activity
+from maltlager.forms import MaltForm, UpdateMaltForm, HopsForm, UpdateHopsForm, CreateUserForm, BoardMemberForm, ActivityForm
 from django.utils import timezone
 import django.db
 import os
@@ -36,12 +36,60 @@ def about(request):
     return render(request, 'maltlager/about.html', context)
 
 def activities(request):
-    test_activity = {'title': "Test activity", 'content': '<p>This is a test activity</p><br><ul><li>List item 1</li><li>List item 2</li></ul>'}
-    context = {'active_page': 'activities', 'activities': [test_activity,test_activity,test_activity]}
+    activity_list = activity.objects.all().order_by('-date')
+    context = {'active_page': 'activities', 'activity_list': activity_list}
     return render(request, 'maltlager/activities.html', context)
 
+def edit_activity(request, activity_id):
+    if request.user.is_staff:
+        if request.method == 'POST':
+            form = ActivityForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                form_title = data.get('title')
+                form_date = data.get('date')
+                form_content = data.get('content')
+                try:
+                    a = activity.objects.get(id=activity_id)
+                    if a:
+                        a.title = form_title
+                        a.date = form_date
+                        a.content = form_content
+                        a.save()
+                except:
+                    a = activity(title=form_title,date=form_date,content=form_content)
+                    a.save()
+                return HttpResponseRedirect('/activities/')
+            else:
+                return HttpResponseRedirect('/invalid_form/')
+        else:
+            try:
+                a = activity.objects.get(id=activity_id)
+                if a:
+                    data = {'title': a.title, 'date': a.date, 'content': a.content}
+                    form = ActivityForm(initial=data)
+                else:
+                    form = ActivityForm()
+            except:
+                form = ActivityForm()
+            context = {'form': form, 'active_page': 'activities', 'activity_id': activity_id}
+            return render(request, 'maltlager/edit_activity.html', context)
+    else:
+        return HttpResponseRedirect('/access_denied/')
+
+def delete_activity(request, activity_id):
+    if request.user.is_staff:
+        try:
+            a = activity.objects.get(id=activity_id)
+            a.delete()
+            return HttpResponseRedirect('/activities/')
+        except:
+            return HttpResponseRedirect('/activities/')
+    else:
+        return HttpResponseRedirect('/access_denied/')
+
 def members(request):
-    bm = board_member.objects.all()
+    bm = board_member.objects.all().order_by('name')
     context = {'active_page': 'members', 'board_member_list': bm}
     return render(request, 'maltlager/members.html', context)
 
