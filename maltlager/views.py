@@ -5,8 +5,8 @@ from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, views
-from maltlager.models import malt, hops, maltchange, hopschange
-from maltlager.forms import MaltForm, UpdateMaltForm, HopsForm, UpdateHopsForm, CreateUserForm
+from maltlager.models import malt, hops, maltchange, hopschange, board_member
+from maltlager.forms import MaltForm, UpdateMaltForm, HopsForm, UpdateHopsForm, CreateUserForm, BoardMemberForm
 from django.utils import timezone
 import django.db
 import os
@@ -41,7 +41,8 @@ def activities(request):
     return render(request, 'maltlager/activities.html', context)
 
 def members(request):
-    context = {'active_page': 'members'}
+    bm = board_member.objects.all()
+    context = {'active_page': 'members', 'board_member_list': bm}
     return render(request, 'maltlager/members.html', context)
 
 def edit_board_member(request, board_member_id):
@@ -54,7 +55,6 @@ def edit_board_member(request, board_member_id):
                 form_name = data.get('name')
                 form_role = data.get('role')
                 form_description = data.get('description')
-                print(data,file=sys.stderr)
                 try:
                     bm = board_member.objects.get(id=board_member_id)
                     if bm:

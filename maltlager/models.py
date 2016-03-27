@@ -19,3 +19,9 @@ class hopschange(models.Model):
     amount = models.FloatField(default=0)
     time = models.DateTimeField()
     user = models.CharField(max_length=100,default="unknown")
+
+class board_member(models.Model):
+    name = models.CharField(max_length=200)
+    role = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/board_member')

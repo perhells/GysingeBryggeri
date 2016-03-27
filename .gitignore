@@ -1,5 +1,6 @@
 gysinge/__pycache__/
 maltlager/__pycache__/
 maltlager/migrations/
+maltlager/static/images/
 *.sqlite3
 *.pyc

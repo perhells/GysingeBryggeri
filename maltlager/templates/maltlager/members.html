@@ -6,7 +6,29 @@
     </div>
     <div class="jumbotron">
         <div class="container">
-            <p style="text-align: center">Här kommer medlemsinformation finnas tillgänglig, såväl som information om styrelsen.</p>
+            <div class="row">
+                {% if board_member_list %}
+                    {% for member in board_member_list %}
+                        <div class="col-lg-3">
+                            <div class="thumbnail">
+                                <img class="thumbnail-image" src="/static/{{ member.image }}">
+                                <h4 style="text-align: center;">{{ member.name }}</h4>
+                                <p style="text-align: center;">{{ member.role }}</p>
+                                <p style="text-align: center;">{{ member.description }}</p>
+                                {% if request.user.is_staff %}
+                                    <a class="btn btn-primary" style="display: block; width: 120px; margin: auto;" href="/edit_board_member/{{ member.id }}/">Edit</a>
+                                    <a class="btn btn-danger" style="display: block; width: 120px; margin: auto;" href="/delete_board_member/{{ member.id }}/">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="text-align: center">Ingen medlemsinformation tillgänglig.</p>
+                {% endif %}
+            </div>
+            {% if request.user.is_staff %}
+                <a class="btn btn-primary" style="display: block; width: 120px; float: right;" href="/edit_board_member/new/">Add Member</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

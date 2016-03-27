@@ -37,9 +37,15 @@ body {
     padding-bottom: 5px;
 }
 .thumbnail-image {
-    height: 175px;
-    width: 175px;
+    display: block;
+    max-height: 175px;
+    max-width: 175px;
     margin: auto;
+}
+.index-image {
+    width: 100%;
+    height: 175px;
+    overflow: hidden;
 }
 .banner-image {
     width: auto;
@@ -1164,7 +1170,6 @@ img {
 .carousel-inner > .item > a > img {
   display: block;
   max-width: 100%;
-  height: auto;
 }
 .img-rounded {
   border-radius: 0px;
@@ -1342,7 +1347,7 @@ p {
 }
 @media (min-width: 1200px) {
   .lead {
-    font-size: 21px;
+    font-size: 14px;
   }
 }
 small,
@@ -5021,8 +5026,8 @@ a.badge:focus {
   color: inherit;
 }
 .jumbotron p {
-  margin-bottom: 15px;
-  font-size: 21px;
+  margin-bottom: 10px;
+  font-size: 14px;
   font-weight: 200;
 }
 .jumbotron > hr {
@@ -5055,7 +5060,7 @@ a.badge:focus {
 .thumbnail {
   display: block;
   padding: 10px;
-  height: 295px;
+  height: auto;
   margin-bottom: 0px;
   line-height: 1.42857143;
   background-color: #ffffff;

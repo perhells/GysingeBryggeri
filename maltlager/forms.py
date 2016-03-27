@@ -17,3 +17,9 @@ class UpdateHopsForm(forms.Form):
 class CreateUserForm(forms.Form):
     username = forms.CharField(max_length=20)
     password = forms.CharField(widget=forms.PasswordInput())
+
+class BoardMemberForm(forms.Form):
+    name = forms.CharField(max_length=200)
+    role = forms.CharField(max_length=200)
+    description = forms.CharField(max_length=200)
+    image = forms.ImageField()
