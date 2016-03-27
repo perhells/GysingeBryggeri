@@ -44,6 +44,49 @@ def members(request):
     context = {'active_page': 'members'}
     return render(request, 'maltlager/members.html', context)
 
+def edit_board_member(request, board_member_id):
+    if request.user.is_staff:
+        if request.method == 'POST':
+            form = BoardMemberForm(request.POST, request.FILES)
+            if form.is_valid():
+                data = form.cleaned_data
+                form_image = request.FILES['image']
+                form_name = data.get('name')
+                form_role = data.get('role')
+                form_description = data.get('description')
+                print(data,file=sys.stderr)
+                try:
+                    bm = board_member.objects.get(id=board_member_id)
+                    if bm:
+                        bm.name = form_name
+                        bm.role = form_role
+                        bm.description = form_description
+                        bm.image = form_image
+                        bm.save()
+                except:
+                    bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
+                    bm.save()
+                return HttpResponseRedirect('/members/')
+            else:
+                return HttpResponseRedirect('/invalid_form/')
+        else:
+            form = BoardMemberForm()
+            context = {'form': form, 'active_page': 'members', 'board_member_name': board_member_id}
+            return render(request, 'maltlager/board_member.html', context)
+    else:
+        return HttpResponseRedirect('/access_denied/')
+
+def delete_board_member(request, board_member_id):
+    if request.user.is_staff:
+        try:
+            bm = board_member.objects.get(id=board_member_id)
+            bm.delete()
+            return HttpResponseRedirect('/members/')
+        except:
+            return HttpResponseRedirect('/members/')
+    else:
+        return HttpResponseRedirect('/access_denied/')
+
 def contact(request):
     context = {'active_page': 'contact'}
     return render(request, 'maltlager/contact.html', context)
