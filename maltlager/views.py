@@ -70,7 +70,15 @@ def edit_board_member(request, board_member_id):
             else:
                 return HttpResponseRedirect('/invalid_form/')
         else:
-            form = BoardMemberForm()
+            try:
+                bm = board_member.objects.get(id=board_member_id)
+                if bm:
+                    data = {'name': bm.name, 'role': bm.role, 'description': bm.description, 'image': bm.image}
+                    form = BoardMemberForm(initial=data)
+                else:
+                    form = BoardMemberForm()
+            except:
+                form = BoardMemberForm()
             context = {'form': form, 'active_page': 'members', 'board_member_name': board_member_id}
             return render(request, 'maltlager/board_member.html', context)
     else:
