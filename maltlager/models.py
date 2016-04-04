@@ -28,5 +28,5 @@ class board_member(models.Model):
 
 class activity(models.Model):
     title = models.CharField(max_length=200)
-    date = models.DateTimeField()
+    date = models.DateTimeField(help_text='Format: YYYY-MM-DD HH:MM')
     content = models.TextField()

@@ -97,26 +97,48 @@ def edit_board_member(request, board_member_id):
     if request.user.is_staff:
         if request.method == 'POST':
             form = BoardMemberForm(request.POST, request.FILES)
-            if form.is_valid():
-                data = form.cleaned_data
-                form_image = request.FILES['image']
-                form_name = data.get('name')
-                form_role = data.get('role')
-                form_description = data.get('description')
-                try:
-                    bm = board_member.objects.get(id=board_member_id)
-                    if bm:
-                        bm.name = form_name
-                        bm.role = form_role
-                        bm.description = form_description
-                        bm.image = form_image
-                        bm.save()
-                except:
+            bm = board_member.objects.get(id=board_member_id)
+            if bm:
+                if form.is_valid():
+                    data = form.cleaned_data
+                    form_image = request.FILES['image']
+                    form_name = data.get('name')
+                    form_role = data.get('role')
+                    form_description = data.get('description')
+                else:
+                    data = request.POST
+                    if request.FILES.get('image'):
+                        form_image = request.FILES.get('image')
+                    else:
+                        form_image = None
+                    if data.get('name'):
+                        form_name = data.get('name')
+                    else:
+                        form_name = None
+                    if data.get('role'):
+                        form_role = data.get('role')
+                    else:
+                        form_role = None
+                    if data.get('description'):
+                        form_description = data.get('description')
+                    else:
+                        form_description = None
+                if form_name:
+                    bm.name = form_name
+                if form_role:
+                    bm.role = form_role
+                if form_description:
+                    bm.description = form_description
+                if form_image:
+                    bm.image = form_image
+                bm.save()
+            else:
+                if form.is_valid():
                     bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
                     bm.save()
-                return HttpResponseRedirect('/members/')
-            else:
-                return HttpResponseRedirect('/invalid_form/')
+                else:
+                    return HttpResponseRedirect('/invalid_form/')
+            return HttpResponseRedirect('/members/')
         else:
             try:
                 bm = board_member.objects.get(id=board_member_id)

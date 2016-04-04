@@ -1,4 +1,5 @@
 {% extends 'maltlager/base.html' %}
+{% load markdown_deux_tags %}
 {% block block_title %}{% endblock %}
 {% block content %}
     <div class="container">
@@ -18,7 +19,7 @@
                                 <p>{{ activity.date|date:'Y-m-d H:i' }}</p>
                             </div>
                             <div class="row">
-                                {{ activity.content|safe }}
+                                {{ activity.content|markdown }}
                             </div>
                             {% if request.user.is_staff %}
                                 <div class="row">

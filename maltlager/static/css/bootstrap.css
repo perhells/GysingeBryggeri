@@ -47,10 +47,11 @@ body {
     max-width: 175px;
     margin: auto;
 }
-.index-image {
-    width: 100%;
+.thumbnail-image-wrapper {
+    width: 175px;
     height: 175px;
-    overflow: hidden;
+    display: block;
+    margin: auto;
 }
 .banner-image {
     width: auto;
