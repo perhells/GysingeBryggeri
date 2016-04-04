@@ -27,6 +27,10 @@ def access_denied(request):
     context = {'active_page': 'access_denied'}
     return render(request, 'maltlager/access_denied.html', context)
 
+def invalid_form(request):
+    context = {'active_page': 'invalid_form'}
+    return render(request, 'maltlager/invalid_form.html', context)
+
 def index(request):
     context = {'active_page': 'home'}
     return render(request, 'maltlager/index.html', context)
@@ -96,7 +100,7 @@ def members(request):
 def edit_board_member(request, board_member_id):
     if request.user.is_staff:
         if request.method == 'POST':
-            if board_member_id != 'new':
+            if not board_member_id == 'new':
                 form = BoardMemberForm(request.POST, request.FILES)
                 bm = board_member.objects.get(id=board_member_id)
                 if bm:
@@ -140,26 +144,10 @@ def edit_board_member(request, board_member_id):
                         form_name = data.get('name')
                         form_role = data.get('role')
                         form_description = data.get('description')
+                        bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
+                        bm.save()
                     else:
-                        data = request.POST
-                        if request.FILES.get('image'):
-                            form_image = request.FILES.get('image')
-                        else:
-                            return HttpResponseRedirect('/invalid_form/')
-                        if data.get('name'):
-                            form_name = data.get('name')
-                        else:
-                            form_name = 'Namn ej angivet'
-                        if data.get('role'):
-                            form_role = data.get('role')
-                        else:
-                            form_role = 'Roll ej angiven'
-                        if data.get('description'):
-                            form_description = data.get('description')
-                        else:
-                            form_description = 'Ingen beskrivning'
-                    bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
-                    bm.save()
+                        return HttpResponseRedirect('/invalid_form/')
                 return HttpResponseRedirect('/members/')
             else:
                 form = BoardMemberForm(request.POST, request.FILES)
@@ -170,23 +158,7 @@ def edit_board_member(request, board_member_id):
                     form_role = data.get('role')
                     form_description = data.get('description')
                 else:
-                    data = request.POST
-                    if request.FILES.get('image'):
-                        form_image = request.FILES.get('image')
-                    else:
-                        form_image = None
-                    if data.get('name'):
-                        form_name = data.get('name')
-                    else:
-                        form_name = None
-                    if data.get('role'):
-                        form_role = data.get('role')
-                    else:
-                        form_role = None
-                    if data.get('description'):
-                        form_description = data.get('description')
-                    else:
-                        form_description = None
+                    return HttpResponseRedirect('/invalid_form/')
                 bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
                 bm.save()
             return HttpResponseRedirect('/members/')
