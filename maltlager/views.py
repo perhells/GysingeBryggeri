@@ -140,10 +140,26 @@ def edit_board_member(request, board_member_id):
                         form_name = data.get('name')
                         form_role = data.get('role')
                         form_description = data.get('description')
-                        bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
-                        bm.save()
                     else:
-                        return HttpResponseRedirect('/invalid_form/')
+                        data = request.POST
+                        if request.FILES.get('image'):
+                            form_image = request.FILES.get('image')
+                        else:
+                            return HttpResponseRedirect('/invalid_form/')
+                        if data.get('name'):
+                            form_name = data.get('name')
+                        else:
+                            form_name = 'Namn ej angivet'
+                        if data.get('role'):
+                            form_role = data.get('role')
+                        else:
+                            form_role = 'Roll ej angiven'
+                        if data.get('description'):
+                            form_description = data.get('description')
+                        else:
+                            form_description = 'Ingen beskrivning'
+                    bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
+                    bm.save()
                 return HttpResponseRedirect('/members/')
             else:
                 form = BoardMemberForm(request.POST, request.FILES)
@@ -153,10 +169,26 @@ def edit_board_member(request, board_member_id):
                     form_name = data.get('name')
                     form_role = data.get('role')
                     form_description = data.get('description')
-                    bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
-                    bm.save()
                 else:
-                    return HttpResponseRedirect('/invalid_form/')
+                    data = request.POST
+                    if request.FILES.get('image'):
+                        form_image = request.FILES.get('image')
+                    else:
+                        form_image = None
+                    if data.get('name'):
+                        form_name = data.get('name')
+                    else:
+                        form_name = None
+                    if data.get('role'):
+                        form_role = data.get('role')
+                    else:
+                        form_role = None
+                    if data.get('description'):
+                        form_description = data.get('description')
+                    else:
+                        form_description = None
+                bm = board_member(name=form_name,role=form_role,description=form_description,image=form_image)
+                bm.save()
             return HttpResponseRedirect('/members/')
         else:
             try:
