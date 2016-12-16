@@ -27,6 +27,10 @@ def access_denied(request):
     context = {'active_page': 'access_denied'}
     return render(request, 'maltlager/access_denied.html', context)
 
+def invalid_user(request):
+    context = {'active_page': 'invalid_user'}
+    return render(request, 'maltlager/invalid_user.html', context)
+
 def invalid_form(request):
     context = {'active_page': 'invalid_form'}
     return render(request, 'maltlager/invalid_form.html', context)

@@ -25,7 +25,8 @@ SECRET_KEY = 'cvg7=7tbi4zei6#_l!+w1km%*2%zguln7fow^24rp)j^)&qwbw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['maltlager.gysingebryggeri.se']
+#ALLOWED_HOSTS = ['maltlager.gysingebryggeri.se']
+ALLOWED_HOSTS =[]
 
 USER_TZ = True
 
@@ -78,18 +79,27 @@ WSGI_APPLICATION = 'gysinge.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'maltlager',
+#        'USER': 'gysinge_maltlager',
+#        'PASSWORD': ',vfjnQq/D~PO9C;0uBEWG>m12t9\G`Y+)7>D0+i[.\|u8swhfZ@a;Ad&OG<W{{Xb*)~b3KzSnV3=(Z"v(>kNlD)(7(""YU@$V9g=s{Gp2n*YP\GZ`4V(@er})I>sLL,%',
+#        'HOST': 'localhost',
+#        'PORT': '',
+#	'TIME_ZONE': None,
+#    }
+#}
+
+DATABASES = {  
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'maltlager',
-        'USER': 'gysinge_maltlager',
-        'PASSWORD': ',vfjnQq/D~PO9C;0uBEWG>m12t9\G`Y+)7>D0+i[.\|u8swhfZ@a;Ad&OG<W{{Xb*)~b3KzSnV3=(Z"v(>kNlD)(7(""YU@$V9g=s{Gp2n*YP\GZ`4V(@er})I>sLL,%',
-        'HOST': 'localhost',
-        'PORT': '',
-	'TIME_ZONE': None,
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
-}
-
+} 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -110,4 +120,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'maltlager/static/')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'maltlager/static/')
+
+#PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(BASE_DIR, 'maltlager/static/')
+#STATIC_ROOT = '/static'

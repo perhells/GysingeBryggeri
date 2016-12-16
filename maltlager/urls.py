@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^calendar/$', views.calendar, name='calendar'),
     url(r'^malts/$', views.list_malts, name='list_malts'),
     url(r'^access_denied/$', views.access_denied, name='access_denied'),
+    url(r'^invalid_user/$', views.invalid_user, name='invalid_user'),
     url(r'^invalid_form/$', views.invalid_form, name='invalid_form'),
     url(r'^login/$', views.login_view, name='login_view'),
     url(r'^logout/$', views.logout_view, name='logout_view'),

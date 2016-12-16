@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE/**/html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -29,44 +29,44 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-right navbar-collapse col-lg-9" id="bs-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        {% if active_page = "home" %}
+                        {% if active_page == "home" %}
                             <li class="active"><a href="/">Hem<span class="sr-only">(current)</span></a></li>
                         {% else %}
                             <li><a href="/">Hem</a></li>
                         {% endif%}
-                        {% if active_page = "about" %}
+                        {% if active_page == "about" %}
                             <li class="active"><a href="/about/">Om oss<span class="sr-only">(current)</span></a></li>
                         {% else %}
                             <li><a href="/about/">Om oss</a></li>
                         {% endif%}
-                        {% if active_page = "activities" %}
+                        {% if active_page == "activities" %}
                             <li class="active"><a href="/activities/">Aktiviteter<span class="sr-only">(current)</span></a></li>
                         {% else %}
                             <li><a href="/activities/">Aktiviteter</a></li>
                         {% endif%}
-                        {% if active_page = "members" %}
+                        {% if active_page == "members" %}
                             <li class="active"><a href="/members/">Medlemmar<span class="sr-only">(current)</span></a></li>
                         {% else %}
                             <li><a href="/members/">Medlemmar</a></li>
                         {% endif%}
-                        {% if active_page = "contact" %}
+                        {% if active_page == "contact" %}
                             <li class="active"><a href="/contact/">Kontakta oss<span class="sr-only">(current)</span></a></li>
                         {% else %}
                             <li><a href="/contact/">Kontakta oss</a></li>
                         {% endif%}
-                        {% if active_page = "calendar" %}
+                        {% if active_page == "calendar" %}
                             <li class="active"><a href="/calendar/">Kalender<span class="sr-only">(current)</span></a></li>
                         {% else %}
                             <li><a href="/calendar/">Kalender</a></li>
                         {% endif%}
                         {% if request.user.is_authenticated %} 
-                            {% if active_page = "maltlager" %}
+                            {% if active_page == "maltlager" %}
                                 <li class="active"><a href="/malts/">Maltlager<span class="sr-only">(current)</span></a></li>
                             {% else %}
                                 <li><a href="/malts/">Maltlager</a></li>
                             {% endif%}
                             {% if request.user.is_staff %} 
-                                {% if active_page = "settings" %}
+                                {% if active_page == "settings" %}
                                     <li class="active"><a href="/settings/">Inställningar</a></li>
                                 {% else %}
                                     <li><a href="/settings/">Inställningar</a></li>
@@ -74,7 +74,7 @@
                             {% endif %}
                             <li><a href="/logout/">Logga ut ({{request.user.username}})</a></li>
                         {% else %}
-                            {% if active_page = "login" %}
+                            {% if active_page == "login" %}
                                 <li class="active"><a href="/login/">Logga in</a></li>
                             {% else %}
                                 <li><a href="/login/">Logga in</a></li>
