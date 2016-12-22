@@ -1,0 +1,22 @@
+{% extends 'maltlager/base.html' %}
+{% block block_title %}{% endblock %}
+{% block content %}
+    <div class="container">
+        <img class="banner-image" src="/static/resources/images/hops-banner.png" alt="Banner image">
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <form action="" method="post" class="form-vertical">
+                <div style="max-width: 180px; width: 180px; margin: 0 auto;" >
+                    {% csrf_token %}
+                    {{ form }}
+                </div>
+                <div style="width: 220px; margin: 0 auto;" >
+                    <br>
+                    <a style="width: 100px; float: left;" class="btn btn-danger" href="/malts/">Back</a>
+                    <input type="submit" style="width: 100px; float: right;" class="btn btn-primary" value="Update malt" />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

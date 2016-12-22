@@ -111,3 +111,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'maltlager/static/')
+
+EMAIL_HOST = 'send.one.com'
+
+EMAIL_PORT = 465
+
+EMAIL_USE_SSL = True
+
+EMAIL_HOST_USER = 'info@gysingebryggeri.se'
+
+EMAIL_HOST_PASSWORD = 'lindorna'

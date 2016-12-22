@@ -28,3 +28,8 @@ class ActivityForm(forms.Form):
     title = forms.CharField(max_length=200)
     date = forms.DateTimeField()
     content = forms.CharField(widget=forms.Textarea)
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=200)
+    mail = forms.CharField(max_length=200)
+    content = forms.CharField(max_length=10000)

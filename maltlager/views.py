@@ -5,8 +5,9 @@ from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, views
+from django.core.mail import send_mail
 from maltlager.models import malt, hops, maltchange, hopschange, board_member, activity
-from maltlager.forms import MaltForm, UpdateMaltForm, HopsForm, UpdateHopsForm, CreateUserForm, BoardMemberForm, ActivityForm
+from maltlager.forms import MaltForm, UpdateMaltForm, HopsForm, UpdateHopsForm, CreateUserForm, BoardMemberForm, ActivityForm, ContactForm
 from django.utils import timezone
 import django.db
 import os
@@ -189,8 +190,25 @@ def delete_board_member(request, board_member_id):
         return HttpResponseRedirect('/access_denied/')
 
 def contact(request):
-    context = {'active_page': 'contact'}
-    return render(request, 'maltlager/contact.html', context)
+    if request.method == 'POST':
+        name = request.POST['name']
+        mail = request.POST['mail']
+        content = request.POST['content']
+        if name is not None and mail is not None and content is not None:
+            send_mail(
+                'Gysinge Bryggerisällskap, message from: ' + name,
+                'The following message was received by ' + name + ' (' + mail + ')\n\n' + content,
+                'info@gysingebryggeri.se',
+                ['info@gysingebryggeri.se'],
+                fail_silently=False,
+            )
+            return HttpResponseRedirect('/contact/#valid')
+        else:
+            return HttpResponseRedirect('/contact/#invalid')
+    else:
+        form = ContactForm()
+        context = {'form': form, 'active_page': 'contact'}
+        return render(request, 'maltlager/contact.html', context)
 
 def calendar(request):
     context = {'active_page': 'calendar'}
@@ -213,7 +231,6 @@ def login_view(request):
         form = AuthenticationForm(request)
         context = {'form': form, 'active_page': 'login'}
         return render(request, 'maltlager/login.html', context)
-
 
 def logout_view(request):
     logout(request)
@@ -356,7 +373,7 @@ def malt_form(request):
                 m.save()
                 malt_list = malt.objects.all()
                 context = {'malt_list': malt_list, 'active_page': 'maltlager'}
-                return render(request, 'maltlager/malts.html',context)
+                return HttpResponseRedirect('/malts/')
         else:
             form = MaltForm()
             context = {'form': form, 'active_page': 'maltlager'}
@@ -379,7 +396,7 @@ def hops_form(request):
                 h.save()
                 hops_list = hops.objects.all()
                 context = {'hops_list': hops_list, 'active_page': 'maltlager'}
-                return render(request, 'maltlager/hops.html',context)
+                return HttpResponseRedirect('/hops/')
         else:
             form = HopsForm()
         context = {'form': form, 'active_page': 'maltlager'}
